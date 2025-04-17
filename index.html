@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Equipment Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+  <script src="firebase-config.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Login Section -->
+    <div id="login-section" class="form-section">
+      <h1>🏥 Equipment Tracker Login</h1>
+      <input type="email" id="login-email" placeholder="Email">
+      <input type="password" id="login-password" placeholder="Password">
+      <button onclick="login()">Login</button>
+      <p>or</p>
+      <button onclick="loginWithGoogle()">Login with Google</button>
+      <p id="login-error" class="error-message"></p>
+    </div>
+
+    <!-- App Content (Shows after login) -->
+    <div id="app-content" style="display: none;">
+      <div class="user-info">
+        Welcome, <span id="user-email"></span>!
+        <button onclick="logout()">Logout</button>
+      </div>
+
+      <h1>🏥 Equipment Tracker</h1>
+      
+      <!-- Add New Equipment -->
+      <div class="form-section">
+        <h2>➕ Add New Equipment</h2>
+        <select id="equipType" required>
+          <option value="">Select Type</option>
+          <option value="Ventilator">Ventilator</option>
+          <option value="IV Pump">IV Pump</option>
+          <option value="Wheelchair">Wheelchair</option>
+          <option value="Defibrillator">Defibrillator</option>
+          <option value="Monitor">Monitor</option>
+        </select>
+        <input type="text" id="equipName" placeholder="Name (e.g., Portable Ventilator)" required>
+        <input type="text" id="equipId" placeholder="ID (e.g., V-101)" required>
+        <input type="text" id="equipDept" placeholder="Department (e.g., ICU)">
+        <button onclick="addEquipment()">Add Equipment</button>
+      </div>
+
+      <!-- Equipment Filter and Status Update -->
+      <div class="form-section">
+        <!-- Update your HTML (inside the "Update Equipment Status" section) -->
+<div class="form-section">
+  <h2>🔄 Update Equipment Status</h2>
+  
+  <!-- Equipment Type Filter -->
+  <div class="filter-row">
+    <label for="equipTypeFilter">Filter by Type:</label>
+    <select id="equipTypeFilter" onchange="filterEquipmentDropdown()">
+      <option value="all">All Equipment</option>
+      <option value="Ventilator">Ventilators</option>
+      <option value="IV Pump">IV Pumps</option>
+      <option value="Wheelchair">Wheelchairs</option>
+    </select>
+  </div>
+
+  <!-- Status Update Form -->
+  <div class="update-row">
+    <select id="equipList">
+      <option value="">Select Equipment</option>
+      <!-- Equipment options will be added by JavaScript -->
+    </select>
+    
+    <select id="status">
+      <option value="Available">✅ Available</option>
+      <option value="In Use">🏥 In Use</option>
+      <option value="Maintenance">🔧 Maintenance</option>
+      <option value="Needs Cleaning">🧼 Needs Cleaning</option>
+    </select>
+    
+    <input type="text" id="location" placeholder="Location (e.g., Room 12)">
+    <button onclick="updateStatus()">Update Status</button>
+  </div>
+</div>
+      <!-- Equipment Dashboard -->
+      <div class="dashboard">
+        <h2>📊 Equipment Status</h2>
+        <table id="equipTable">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Location</th>
+              <th>Department</th>
+            </tr>
+          </thead>
+          <tbody id="equipData"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
